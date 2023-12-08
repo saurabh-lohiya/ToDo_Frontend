@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import SignupForm from "./SignupForm";
 import LoginForm from "./LoginForm";
 
 const AuthForm: React.FC = () => {
+	const [showLoginForm, setShowLoginForm] = useState(false);
 	return (
-		<div className='flex items-center justify-center h-screen bg-gray-100'>
-			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-				<div className='col-span-2 lg:col-span-1'>
-					<SignupForm />
-				</div>
-				<div className='col-span-1'>
-					<LoginForm />
-				</div>
+		<div className='md:px-8'>
+			<div className='w-full'>
+				{showLoginForm ? (
+					<LoginForm toggleShowLoginForm={setShowLoginForm} />
+				) : (
+					<SignupForm toggleShowLoginForm={setShowLoginForm} />
+				)}
 			</div>
 		</div>
 	);

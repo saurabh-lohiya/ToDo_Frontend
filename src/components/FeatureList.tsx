@@ -2,15 +2,18 @@ import React from "react";
 
 const FeatureList: React.FC = () => {
 	return (
-		<div className='flex justify-center items-center mt-8'>
-			<div>
-				<h2 className='text-2xl font-semibold mb-4'>Features</h2>
-				<ul className='list-disc list-inside'>
-					<li>Task Management</li>
-					<li>Priority Levels</li>
-					<li>Due Dates</li>
+		<div className='flex mt-8'>
+			<div className='flex flex-col items-start'>
+				<p className='text-6xl text-gray-500 text-start font-bold'>
+					Your go-to task management solution
+				</p>
+				<p className='text-5xl text-gray-500 font-semibold my-6'>Features</p>
+				<div className='text-gray-500 flex-col text-start text-3xl font-bold space-y-4'>
+					<p>Task Management</p>
+					<p>Priority Levels</p>
+					<p>Due Dates</p>
 					{/* Add more features */}
-				</ul>
+				</div>
 			</div>
 		</div>
 	);

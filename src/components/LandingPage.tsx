@@ -5,15 +5,19 @@ import AuthForm from "./AuthForm";
 
 const LandingPage: React.FC = () => {
 	return (
-		<div className='min-h-screen flex bg-gray-100'>
-			<div className='w-1/2 p-8'>
+		<section className='w-full flex justify-center'>
+			<div className='justify-center w-full max-w-[1280px]'>
 				<Header />
-				<FeatureList />
+				<div className='flex w-full flex-wrap'>
+					<div className='w-1/2'>
+						<FeatureList />
+					</div>
+					<div className='w-1/2 p-8'>
+						<AuthForm />
+					</div>
+				</div>
 			</div>
-			<div className='w-1/2 bg-blue-500 p-8'>
-				<AuthForm />
-			</div>
-		</div>
+		</section>
 	);
 };
 
