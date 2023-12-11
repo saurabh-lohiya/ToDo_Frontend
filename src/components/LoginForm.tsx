@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import GoogleIcon from "../svgs/Google";
 import AppleIcon from "../svgs/AppleIcon";
+import { IAuthForm } from "./const";
 
-const LoginForm: React.FC = (props) => {
+const LoginForm: React.FC<IAuthForm> = (props) => {
 	return (
 		<div className='bg-white p-8 rounded-lg shadow-md text-start w-full border-[1px]'>
 			<p className='text-2xl font-semibold'>Sign In With</p>

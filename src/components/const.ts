@@ -6,11 +6,27 @@ export enum ActionType {
 	update_user = "UPDATE_USER",
 }
 
+export interface IAuthForm {
+	toggleShowLoginForm: (arg: boolean) => void;
+}
+export interface ITodoHeader {
+	type: TASK_TYPE;
+}
+
+export enum TASK_TYPE {
+	TODO = "TODO",
+	IN_PROGRESS = "IN_PROGRESS",
+	DONE = "DONE",
+}
 export interface IReducer {
-	dispatch: () => IUserState;
+	dispatch: (args: IdispatchArgs) => IUserState;
 	userState: IUserState;
 }
 
+interface IdispatchArgs {
+	type: ActionType;
+	payload: any;
+}
 export interface IUser {
 	email: string;
 	first_name?: string;
@@ -23,6 +39,10 @@ export interface IUserState {
 	tasks?: ITask[];
 }
 
+export interface ITasks {
+	task_type: TASK_TYPE;
+	tasks?: ITask[];
+}
 export interface ITask {
 	title: string;
 	description: string;

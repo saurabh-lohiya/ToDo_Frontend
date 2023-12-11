@@ -1,26 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GoogleIcon from "./../svgs/Google";
 import AppleIcon from "../svgs/AppleIcon";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { IAuthForm } from "./const";
 
-const SignupForm: React.FC = (props) => {
+const SignupForm: React.FC<IAuthForm> = (props) => {
 	const navigate = useNavigate();
-	async function registerUser(formData: any) {
-		const { email, password } = formData;
-		const userRegRes: any = await axios.post(
-			`${process.env.back}/users/register`,
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [agreePrivacyPolicy, setAgreePrivacyPolicy] = useState(false);
+	const [errorMessage, setErrorMessage] = useState("");
+
+	// const [showErrorMessage, ];
+	async function registerUser(e: React.FormEvent<HTMLFormElement>) {
+		e.preventDefault();
+		const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+		if (!emailRegex.test(email)) {
+			setErrorMessage("Email is not valid");
+			return;
+		}
+		const passwordRegex = /^(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,}$/;
+		if (!passwordRegex.test(password)) {
+			setErrorMessage(
+				"Password must have minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+			);
+			return;
+		}
+		if (!agreePrivacyPolicy) {
+			setErrorMessage("Please agree to the Privacy Policy");
+			return;
+		}
+		setErrorMessage("");
+		const userRegRes = await axios.post(
+			`http://localhost:8080/users/register`,
 			{
 				email,
 				password,
 			}
 		);
-		const { token } = userRegRes.data;
 		if (userRegRes.status == 201) {
-			localStorage.setItem("token", token);
+			navigate("/home");
 		}
-		navigate("/home");
 	}
 	return (
 		<div className='bg-white p-8 rounded-lg shadow-md text-start w-full border-[1px]'>
@@ -52,6 +74,8 @@ const SignupForm: React.FC = (props) => {
 							type='email'
 							id='email'
 							name='email'
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
 							placeholder='Your email'
 							className='w-full border rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring focus:border-blue-300'
 							required
@@ -67,6 +91,8 @@ const SignupForm: React.FC = (props) => {
 							type='password'
 							id='password'
 							name='password'
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
 							placeholder='Your password'
 							className='w-full border rounded-md py-2 px-3 text-gray-700 focus:outline-none focus:ring focus:border-blue-300'
 							required
@@ -76,6 +102,10 @@ const SignupForm: React.FC = (props) => {
 						<input
 							type='checkbox'
 							id='remember'
+							checked={agreePrivacyPolicy}
+							onChange={() => {
+								setAgreePrivacyPolicy(!agreePrivacyPolicy);
+							}}
 							name='remember'
 							className='mr-2'
 						/>
@@ -86,10 +116,15 @@ const SignupForm: React.FC = (props) => {
 							</Link>
 						</label>
 					</div>
+					{errorMessage && (
+						<div className='mt-2'>
+							<p className='text-sm text-red-500'>{errorMessage}</p>
+						</div>
+					)}
 					<button
 						type='submit'
 						className='w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300 mt-4'
-						onClick={() => registerUser()}>
+						onClick={(e) => registerUser(e)}>
 						Sign Up
 					</button>
 				</form>
