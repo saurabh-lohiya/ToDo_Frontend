@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import GoogleIcon from "./../svgs/Google";
 import AppleIcon from "../svgs/AppleIcon";
 import { Link } from "react-router-dom";
@@ -7,41 +7,47 @@ import axios from "axios";
 import { IAuthForm } from "./const";
 
 const SignupForm: React.FC<IAuthForm> = (props) => {
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [agreePrivacyPolicy, setAgreePrivacyPolicy] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
 
 	// const [showErrorMessage, ];
-	async function registerUser(e: React.FormEvent<HTMLFormElement>) {
-		e.preventDefault();
-		const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-		if (!emailRegex.test(email)) {
-			setErrorMessage("Email is not valid");
-			return;
-		}
-		const passwordRegex = /^(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,}$/;
-		if (!passwordRegex.test(password)) {
-			setErrorMessage(
-				"Password must have minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
-			);
-			return;
-		}
-		if (!agreePrivacyPolicy) {
-			setErrorMessage("Please agree to the Privacy Policy");
-			return;
-		}
-		setErrorMessage("");
-		const userRegRes = await axios.post(
-			`http://localhost:8080/users/register`,
-			{
-				email,
-				password,
+	async function registerUser(
+		e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+	) {
+		try {
+			e.preventDefault();
+			const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+			if (!emailRegex.test(email)) {
+				setErrorMessage("Email is not valid");
+				return;
 			}
-		);
-		if (userRegRes.status == 201) {
-			navigate("/home");
+			const passwordRegex = /^(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,}$/;
+			if (!passwordRegex.test(password)) {
+				setErrorMessage(
+					"Password must have minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character"
+				);
+				return;
+			}
+			if (!agreePrivacyPolicy) {
+				setErrorMessage("Please agree to the Privacy Policy");
+				return;
+			}
+			setErrorMessage("");
+			const userRegRes = await axios.post(
+				`http://localhost:8080/auth/register`,
+				{
+					email,
+					password,
+				}
+			);
+			if (userRegRes.status == 201) {
+				props.toggleShowLoginForm(true);
+			}
+		} catch (error) {
+			console.log(error);
 		}
 	}
 	return (
