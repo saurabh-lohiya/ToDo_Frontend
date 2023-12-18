@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useEffect } from "react";
+import React, { FormEvent, useContext } from "react";
 import { ActionType, ITodoList, TodoListStatus } from "./const";
 import DatePicker from "react-date-picker";
 import { TodoListContext } from "./Home";
@@ -15,7 +15,7 @@ const Sidebar: React.FC<SidebarProps> = ({ todoList, show }) => {
 	const [description, setDescription] = React.useState(
 		todoList.description || ""
 	);
-	const [isExistingTodoList, setIsExistingTodoList] = React.useState(
+	const [isExistingTodoList] = React.useState(
 		todoList.id ? true : false
 	);
 	const [tasks, setTasks] = React.useState(

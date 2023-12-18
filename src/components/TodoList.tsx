@@ -17,7 +17,7 @@ const TodoList: React.FC<ITodoList> = (props) => {
 		});
 		dispatch({
 			type: ActionType.delete_todolist,
-			payload: props.id,
+			payload: props.id || -1,
 		});
 		setShowMoreActions(false);
 	};
@@ -67,7 +67,7 @@ const TodoList: React.FC<ITodoList> = (props) => {
 						<div
 							className='flex items-center space-x-2 bg-white text-md cursor-pointer'
 							onClick={() => {
-								setOpenTodoListId(props.id);
+								setOpenTodoListId(props.id || -1);
 								setIsTodoListOpen(true);
 								setShowMoreActions(false);
 							}}>

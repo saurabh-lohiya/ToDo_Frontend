@@ -1,11 +1,5 @@
-import React from "react"
+const Feature = () => {
+	return <div></div>;
+};
 
-const Feature = (props) => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
-
-export default Feature
+export default Feature;

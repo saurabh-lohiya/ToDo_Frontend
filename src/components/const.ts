@@ -47,7 +47,7 @@ export interface IUser {
 }
 
 export interface ITodoList {
-	id: number;
+	id?: number;
 	title: string;
 	description?: string;
 	status: TodoListStatus;

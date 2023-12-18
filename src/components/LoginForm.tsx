@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import GoogleIcon from "../svgs/Google";
-import AppleIcon from "../svgs/AppleIcon";
+import { GoogleIcon, AppleIcon } from "../assets";
 import { ActionType, IAuthForm } from "./const";
 import axios from "axios";
 import { UserContext } from "../App";

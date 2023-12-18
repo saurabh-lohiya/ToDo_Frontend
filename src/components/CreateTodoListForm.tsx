@@ -97,7 +97,7 @@ const CreateTodoListForm = () => {
 						className='w-[90%] hover:bg-slate-200 rounded-sm py-2 px-3 text-gray-700 focus:outline-none'
 					/>
 					<>
-						{tasks.map((task, index) => (
+						{tasks.map((_task, index) => (
 							<div
 								key={index}
 								className='w-[90%] flex items-end space-x-4 px-2'>
