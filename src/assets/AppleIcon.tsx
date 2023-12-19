@@ -1,5 +1,3 @@
-import React from "react";
-
 const AppleIcon = () => {
 	return (
 		<svg
@@ -11,9 +9,9 @@ const AppleIcon = () => {
 			<g
 				id='Page-1'
 				stroke='none'
-				stroke-width='1'
+				strokeWidth='1'
 				fill='none'
-				fill-rule='evenodd'>
+				fillRule='evenodd'>
 				<g
 					id='Dribbble-Light-Preview'
 					transform='translate(-102.000000, -7439.000000)'

@@ -1,54 +1,72 @@
+import { Dispatch } from "react";
+
 export enum ActionType {
-	create_task = "CREATE_TASK",
-	update_task = "UPDATE_TASK",
-	delete_task = "DELETE_TASK",
+	create_todolist = "CREATE_TODOLIST",
+	update_todolist = "UPDATE_TODOLIST",
+	delete_todolist = "DELETE_TODOLIST",
 	set_authentication = "SET_AUTHENTICATION",
 	update_user = "UPDATE_USER",
+	set_user = "SET_USER",
 }
 
+export interface IAuthForm {
+	toggleShowLoginForm: (arg: boolean) => void;
+}
+export interface ITodoHeader {
+	type: TodoListStatus;
+}
+
+export enum TodoListStatus {
+	TODO = "TODO",
+	IN_PROGRESS = "IN_PROGRESS",
+	DONE = "DONE",
+}
 export interface IReducer {
-	dispatch: () => IUserState;
-	userState: IUserState;
+	dispatch: Dispatch<IAction>;
+	state: IUserState;
+}
+
+export interface ITodoListSectionProps {
+	todoLists?: ITodoList[];
+	sectionType: TodoListStatus;
+}
+
+export interface IUserState extends IUser {
+	isAuthenticated: boolean;
 }
 
 export interface IUser {
+	id: number;
 	email: string;
+	phone_number?: string;
+	user_name?: string;
 	first_name?: string;
 	last_name?: string;
+	birth_date?: Date;
+	todoLists?: ITodoList[];
 }
 
-export interface IUserState {
-	isUserAuthenticated: boolean;
-	user?: IUser;
-	tasks?: ITask[];
+export interface ITodoList {
+	id?: number;
+	title: string;
+	description?: string;
+	status: TodoListStatus;
+	start_date?: Date;
+	end_date?: Date;
+	tasks: ITask[];
+	onUpdateStatus?: () => void;
+	onDelete?: () => void;
+	openTodoList?: () => void;
 }
 
 export interface ITask {
 	title: string;
-	description: string;
-	status: TaskStatus;
-	userId: number;
-	start_date: Date;
-	end_date: Date;
-	taskItems: ITaskItem[];
-	onUpdateStatus?: () => void;
-	onDelete?: () => void;
-}
-
-export interface ITaskItem {
-	title: string;
 	status: boolean;
 }
 export type IAction =
-	| { type: ActionType.create_task; payload: IUserState }
-	| { type: ActionType.update_task; payload: IUserState }
-	| { type: ActionType.delete_task; payload: number }
+	| { type: ActionType.create_todolist; payload: ITodoList }
+	| { type: ActionType.update_todolist; payload: ITodoList }
+	| { type: ActionType.delete_todolist; payload: number }
 	| { type: ActionType.set_authentication; payload: boolean }
-	| { type: ActionType.update_user; payload: IUserState };
-
-enum TaskStatus {
-	todo = "TO_DO",
-	inprogress = "IN_PROGRESS",
-	completed = "COMPLETED",
-	discarded = "DISCARDED",
-}
+	| { type: ActionType.update_user; payload: IUserState }
+	| { type: ActionType.set_user; payload: IUser };
