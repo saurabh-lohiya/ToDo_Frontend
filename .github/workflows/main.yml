@@ -36,5 +36,5 @@ jobs:
 
       - name: Deploy to Elastic Beanstalk
         run: |
-          aws elasticbeanstalk create-application-version --application-name todo --version-label ${{ github.sha }} --source-bundle S3Bucket="elasticbeanstalk-ap-south-1-401487493232",S3Key="todo/${{ github.sha }}.zip"
+          aws elasticbeanstalk create-application-version --application-name todo --version-label ${{ github.sha }} --source-bundle S3Bucket="elasticbeanstalk-ap-south-1-401487493232",S3Key="todo_frontend"
           aws elasticbeanstalk update-environment --application-name todo --environment-name todo-dev --version-label ${{ github.sha }}
