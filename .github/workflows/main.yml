@@ -28,7 +28,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: Todo
+          ECR_REPOSITORY: todo
           IMAGE_TAG: latest
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
@@ -36,5 +36,5 @@ jobs:
 
       - name: Deploy to Elastic Beanstalk
         run: |
-          aws elasticbeanstalk create-application-version --application-name Todo --version-label ${{ github.sha }} --source-bundle S3Bucket="elasticbeanstalk-ap-south-1-401487493232",S3Key="Todo/${{ github.sha }}.zip"
-          aws elasticbeanstalk update-environment --application-name Todo --environment-name Todo-dev --version-label ${{ github.sha }}
+          aws elasticbeanstalk create-application-version --application-name todo --version-label ${{ github.sha }} --source-bundle S3Bucket="my-bucket",S3Key="todo/${{ github.sha }}.zip"
+          aws elasticbeanstalk update-environment --application-name todo --environment-name todo-dev --version-label ${{ github.sha }}
